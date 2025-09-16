@@ -16,7 +16,7 @@ const GuestLogin = () => {
 
     // Call backend guest login API
     try {
-      const response = await fetch("http://localhost:3001/api/v1/users/guest", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL_AUTH}/api/v1/users/guest`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

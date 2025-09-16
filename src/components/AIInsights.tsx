@@ -194,7 +194,7 @@ const AIInsights = () => {
           onMessageSent={async () => {
             // Refresh chat history after sending a message
             const token = localStorage.getItem('token');
-            fetch('http://localhost:3004/api/v1/ai-service/', {
+            fetch(`${import.meta.env.VITE_API_URL_INSIGHTS}/api/v1/ai-service/`, {
               credentials: 'include',
               headers: {
                 'Authorization': token ? `Bearer ${token}` : '',

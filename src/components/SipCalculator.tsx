@@ -68,7 +68,7 @@ const SIPCalculator = () => {
   const handleCalculateReturns = async () => {
     setShowResults(false);
     try {
-      const response = await fetch('http://localhost:3003/api/v1/goal-plans/sip/calculate', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL_PORTFOLIO}/api/v1/goal-plans/sip/calculate`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

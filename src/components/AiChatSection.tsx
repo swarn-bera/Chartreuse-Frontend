@@ -108,7 +108,7 @@ const AiChatSection = ({ conversations, selectedMessages = [], onMessageSent }: 
       }
       // If "Review my portfolio" is active, use portfolio analyze API
       if (activeAction === "Review my portfolio") {
-        url = 'http://localhost:3004/api/v1/ai-service/portfolio/analyze';
+        url = `${import.meta.env.VITE_API_URL_INSIGHTS}/api/v1/ai-service/portfolio/analyze`;
         body = { portfolioName: currentQuery };
         if (conversationId) {
           body.conversationId = conversationId;
