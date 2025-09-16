@@ -5,27 +5,35 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export function DashboardHeader() {
-  // Get user data from token/localStorage
-  const [userData, setUserData] = useState<{ name: string; email?: string; initials: string }>({ name: "", email: "", initials: "" });
+  const [userData, setUserData] = useState<{ name?: string; email?: string | null; initials?: string }>({});
 
   useEffect(() => {
-    // Get token from localStorage
-    const token = localStorage.getItem("token");
-    // Decode token to get user info (simple base64 decode for demo, use jwt-decode in real app)
-    // For now, get user info from localStorage or backend
-    // You can replace this with a call to /api/v1/users/me if needed
-    const userRaw = localStorage.getItem("user");
-    if (userRaw) {
-      const user = JSON.parse(userRaw);
-      setUserData({
-        name: user.name || "Guest",
-        email: user.email,
-        initials: user.name ? user.name.split(" ").map((n: string) => n[0]).join("") : "G"
-      });
-    } else {
-      // Fallback: just show Guest
-      setUserData({ name: "Guest", initials: "G" });
-    }
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await fetch(`${import.meta.env.VITE_API_URL_AUTH}/api/v1/users/me`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        if (!response.ok) throw new Error("Failed to fetch user");
+        const result = await response.json();
+        if (result?.data) {
+          setUserData({
+            name: result.data.name || "Guest",
+            email: result.data.email,
+            initials: result.data.name ? result.data.name.split(" ").map((n: string) => n[0]).join("") : "G"
+          });
+        } else {
+          setUserData({ name: "Guest", initials: "G" });
+        }
+      } catch (error) {
+        setUserData({ name: "Guest", initials: "G" });
+      }
+    };
+    fetchUser();
   }, []);
 
   const handleLogout = () => {

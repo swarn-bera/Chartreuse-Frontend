@@ -8,6 +8,32 @@ import { useNavigate } from "react-router-dom";
 import CreatePortfolioNameModal from "@/components/CreatePortfolioNameModal";
 
 const Dashboard = () => {
+  const [user, setUser] = useState<{ name?: string | null; email?: string | null }>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${import.meta.env.VITE_API_URL_AUTH}/api/v1/users/me`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        if (!response.ok) throw new Error('Failed to fetch user');
+        const result = await response.json();
+        if (result?.data) {
+          setUser({ name: result.data.name || 'Guest', email: result.data.email });
+        } else {
+          setUser({ name: 'Guest', email: null });
+        }
+      } catch (error) {
+        setUser({ name: 'Guest', email: null });
+      }
+    };
+    fetchUser();
+  }, []);
   const navigate = useNavigate();
   const [portfolios, setPortfolios] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -92,13 +118,26 @@ const Dashboard = () => {
           <h1 className="text-3xl font-bold tracking-tight">Portfolio Dashboard</h1>
           <p className="text-muted-foreground">Manage all your investment portfolios in one place</p>
         </div>
-        <Button 
-          onClick={() => setIsCreateModalOpen(true)}
-          className="bg-gradient-primary hover:opacity-90"
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Create Portfolio
-        </Button>
+        <div className="flex items-center gap-3">
+          <div className="flex flex-col items-end">
+            <div className="flex items-center gap-2">
+              <div className="rounded-full bg-muted w-8 h-8 flex items-center justify-center font-bold text-lg">
+                {(user?.name ? user.name.charAt(0).toUpperCase() : 'G')}
+              </div>
+              <span className="font-semibold">{user?.name || 'Guest'}</span>
+            </div>
+            {user?.email && (
+              <span className="text-xs text-muted-foreground">{user.email}</span>
+            )}
+          </div>
+          <Button 
+            onClick={() => setIsCreateModalOpen(true)}
+            className="bg-gradient-primary hover:opacity-90"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Create Portfolio
+          </Button>
+        </div>
       </div>
 
       {/* Portfolio Grid */}
