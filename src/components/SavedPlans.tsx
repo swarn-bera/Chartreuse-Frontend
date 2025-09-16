@@ -57,7 +57,7 @@ const SavedPlans = () => {
     const fetchPlans = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:3003/api/v1/goal-plans/', {
+  const response = await fetch(`${import.meta.env.VITE_API_URL_PORTFOLIO}/api/v1/goal-plans/`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ const SavedPlans = () => {
   const deletePlan = async (planId: string) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:3003/api/v1/goal-plans/${planId}`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL_PORTFOLIO}/api/v1/goal-plans/${planId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

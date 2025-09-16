@@ -18,7 +18,7 @@ const CreatePortfolioNameModal = ({ isOpen, onClose, onCreatePortfolio }: Create
     if (!portfolioName.trim()) return;
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3003/api/v1/portfolios/', {
+  const response = await fetch(`${import.meta.env.VITE_API_URL_PORTFOLIO}/api/v1/portfolios/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

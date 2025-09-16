@@ -31,7 +31,7 @@ const PortfolioView = () => {
     setDeleting(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:3003/api/v1/portfolios/${portfolioId}`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL_PORTFOLIO}/api/v1/portfolios/${portfolioId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const PortfolioView = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:3003/api/v1/portfolios/${portfolioId}`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL_PORTFOLIO}/api/v1/portfolios/${portfolioId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -42,7 +42,7 @@ const AddHoldingModal = ({ isOpen, onClose, onAddHolding, portfolioId }: AddHold
         activeSIPAmount: investmentType === 'SIP' ? parseFloat(monthlySip) || 0 : 0
       };
       try {
-        const response = await fetch('http://localhost:3003/api/v1/portfolios/add-holding', {
+  const response = await fetch(`${import.meta.env.VITE_API_URL_PORTFOLIO}/api/v1/portfolios/add-holding`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const AddHoldingModal = ({ isOpen, onClose, onAddHolding, portfolioId }: AddHold
     setSearchLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:3002/api/v1/mutual-funds?search=${encodeURIComponent(search)}&page=1&limit=5`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL_FUNDS}/api/v1/mutual-funds?search=${encodeURIComponent(search)}&page=1&limit=5`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

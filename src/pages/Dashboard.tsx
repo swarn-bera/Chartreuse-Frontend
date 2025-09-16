@@ -17,7 +17,7 @@ const Dashboard = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3003/api/v1/portfolios/names/portfolio', {
+  const response = await fetch(`${import.meta.env.VITE_API_URL_PORTFOLIO}/api/v1/portfolios/names/portfolio`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

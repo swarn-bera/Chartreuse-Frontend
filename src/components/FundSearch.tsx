@@ -47,7 +47,7 @@ const FundSearch = () => {
     if (category && category !== 'ALL') {
       params.append('category', category);
     }
-    fetch(`http://localhost:3002/api/v1/mutual-funds?${params.toString()}`)
+  fetch(`${import.meta.env.VITE_API_URL_FUNDS}/api/v1/mutual-funds?${params.toString()}`)
       .then(res => res.json())
       .then(data => {
         setFunds(data.funds || []);
@@ -126,10 +126,10 @@ const FundSearch = () => {
                       setSelectedFund(fund);
                       setDetailsLoading(true);
                       try {
-                        const metricsRes = await fetch(`http://localhost:3002/api/v1/mutual-funds/${fund.schemeCode}/metrics-and-rating`);
+                        const metricsRes = await fetch(`${import.meta.env.VITE_API_URL_FUNDS}/api/v1/mutual-funds/${fund.schemeCode}/metrics-and-rating`);
                         const metrics = await metricsRes.json();
                         setFundMetrics(metrics);
-                        const riskRes = await fetch(`http://localhost:3002/api/v1/mutual-funds/${fund.schemeCode}/risk`);
+                        const riskRes = await fetch(`${import.meta.env.VITE_API_URL_FUNDS}/api/v1/mutual-funds/${fund.schemeCode}/risk`);
                         const risk = await riskRes.json();
                         setFundRisk(risk);
                       } catch {

@@ -29,7 +29,7 @@ const AIInsights = () => {
   useEffect(() => {
     // Fetch chat history from backend with Authorization header
     const token = localStorage.getItem('token');
-    fetch('http://localhost:3004/api/v1/ai-service/', {
+  fetch(`${import.meta.env.VITE_API_URL_INSIGHTS}/api/v1/ai-service/`, {
       credentials: 'include',
       headers: {
         'Authorization': token ? `Bearer ${token}` : '',
@@ -62,7 +62,7 @@ const AIInsights = () => {
     setSelectedMessages([]);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3004/api/v1/ai-service/${chatId}`, {
+  const res = await fetch(`${import.meta.env.VITE_API_URL_INSIGHTS}/api/v1/ai-service/${chatId}`, {
         headers: {
           'Authorization': token ? `Bearer ${token}` : '',
         },
@@ -81,14 +81,14 @@ const AIInsights = () => {
     // Optionally, create a new conversation in backend
     // After creation, refresh chat history
     const token = localStorage.getItem('token');
-    await fetch('http://localhost:3004/api/v1/ai-service/', {
+  await fetch(`${import.meta.env.VITE_API_URL_INSIGHTS}/api/v1/ai-service/`, {
       credentials: 'include',
       headers: {
         'Authorization': token ? `Bearer ${token}` : '',
       },
     });
     // Refresh chat history
-    fetch('http://localhost:3004/api/v1/ai-service/', {
+  fetch(`${import.meta.env.VITE_API_URL_INSIGHTS}/api/v1/ai-service/`, {
       credentials: 'include',
       headers: {
         'Authorization': token ? `Bearer ${token}` : '',
@@ -124,7 +124,7 @@ const AIInsights = () => {
     if (!deleteConversationId) return;
     try {
       const token = localStorage.getItem('token');
-      await fetch(`http://localhost:3004/api/v1/ai-service/${deleteConversationId}`, {
+  await fetch(`${import.meta.env.VITE_API_URL_INSIGHTS}/api/v1/ai-service/${deleteConversationId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': token ? `Bearer ${token}` : '',

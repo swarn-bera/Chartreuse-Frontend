@@ -144,7 +144,7 @@ const GoalPlanner = () => {
     try {
       // Get token from localStorage (customize if you use context or other storage)
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3003/api/v1/goal-plans/compute', {
+  const response = await fetch(`${import.meta.env.VITE_API_URL_PORTFOLIO}/api/v1/goal-plans/compute`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -260,7 +260,7 @@ const GoalPlanner = () => {
     }
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3003/api/v1/goal-plans/', {
+  const response = await fetch(`${import.meta.env.VITE_API_URL_PORTFOLIO}/api/v1/goal-plans/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
