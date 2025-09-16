@@ -10,7 +10,7 @@ const Index = () => {
         </p>
         <div className="flex gap-4 justify-center">
           <a href="/login" className="bg-white text-primary px-8 py-3 rounded-lg font-medium hover:bg-white/90 transition-colors">
-            Login In
+            Login
           </a>
           <a href="/signup" className="border border-white/20 text-white px-8 py-3 rounded-lg font-medium hover:bg-white/10 transition-colors">
             Get Started

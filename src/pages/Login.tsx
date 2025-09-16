@@ -115,9 +115,9 @@ const Login = () => {
               )}
 
               <div className="flex items-center justify-between">
-                <Link to="/forgot-password" className="text-sm text-primary hover:underline">
+                {/* <Link to="/forgot-password" className="text-sm text-primary hover:underline">
                   Forgot password?
-                </Link>
+                </Link> */}
               </div>
 
               <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
