@@ -114,6 +114,7 @@ const FundSearch = () => {
                   <TableHead>Fund Details</TableHead>
                   <TableHead>Category</TableHead>
                   <TableHead>NAV</TableHead>
+                  <TableHead>Date</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -160,6 +161,9 @@ const FundSearch = () => {
                       </Badge>
                     </TableCell>
                     <TableCell className="font-medium">{parseFloat(fund.nav).toFixed(2)}</TableCell>
+                    <TableCell className="font-medium">
+                      {fund.navDate ? new Date(fund.navDate).toLocaleDateString() : '-'}
+                    </TableCell>
                     <TableCell>
                       <Button variant="ghost" size="sm">View</Button>
                     </TableCell>

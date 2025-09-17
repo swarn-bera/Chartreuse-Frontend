@@ -104,7 +104,10 @@ const Dashboard = () => {
         <CreatePortfolioNameModal
           isOpen={isCreateModalOpen}
           onClose={() => setIsCreateModalOpen(false)}
-          onCreatePortfolio={() => setIsCreateModalOpen(false)}
+          onCreatePortfolio={() => {
+            setIsCreateModalOpen(false);
+            fetchPortfolios(); // Refetch portfolios after creation
+          }}
         />
       </div>
     );

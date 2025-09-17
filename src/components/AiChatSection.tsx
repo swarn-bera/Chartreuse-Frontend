@@ -96,7 +96,7 @@ const AiChatSection = ({ conversations, selectedMessages = [], onMessageSent }: 
 
     try {
       const token = localStorage.getItem('token');
-      let url = 'http://localhost:3004/api/v1/ai-service/';
+      let url = `${import.meta.env.VITE_API_URL_INSIGHTS}/api/v1/ai-service/`;
       let body: any = { prompt: currentQuery };
       if (conversationId) {
         body.conversationId = conversationId;
@@ -104,7 +104,7 @@ const AiChatSection = ({ conversations, selectedMessages = [], onMessageSent }: 
 
       // If "Give me investment advice" is active, use investment API
       if (activeAction === "Give me investment advice") {
-        url = 'http://localhost:3004/api/v1/ai-service/investment';
+        url = `${import.meta.env.VITE_API_URL_INSIGHTS}/api/v1/ai-service/investment`;
       }
       // If "Review my portfolio" is active, use portfolio analyze API
       if (activeAction === "Review my portfolio") {

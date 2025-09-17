@@ -177,7 +177,10 @@ const PortfolioView = () => {
           <AddHoldingModal
             isOpen={isAddHoldingModalOpen}
             onClose={() => setIsAddHoldingModalOpen(false)}
-            onAddHolding={() => {}}
+            onAddHolding={() => {
+              setIsAddHoldingModalOpen(false);
+              fetchPortfolio(); // Refetch holdings after adding
+            }}
             portfolioId={portfolioId as string}
           />
         </div>
