@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Loader from "@/components/ui/Loader";
 import { Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,7 @@ const FundSearch = () => {
     { value: "LARGE_CAP", label: "Large Cap" },
     { value: "FLEXI_CAP", label: "Flexi Cap" },
     { value: "MULTI_CAP", label: "Multi Cap" },
+    { value: "CONTRA_CAP", label: "Contra Fund" },
   ];
   const pageSize = 8;
 
@@ -106,7 +108,7 @@ const FundSearch = () => {
       <Card className="shadow-soft">
         <CardContent className="p-0">
           {loading ? (
-            <div className="py-8 text-center text-muted-foreground">Loading...</div>
+            <Loader />
           ) : (
             <Table>
               <TableHeader>
@@ -154,6 +156,7 @@ const FundSearch = () => {
                           fund.category === "LARGE_CAP" ? "bg-yellow-100 text-yellow-800 border-none" :
                           fund.category === "FLEXI_CAP" ? "bg-purple-100 text-purple-800 border-none" :
                           fund.category === "MULTI_CAP" ? "bg-pink-100 text-pink-800 border-none" :
+                          fund.category === "CONTRA_CAP" ? "bg-orange-100 text-orange-800 border-none" :
                           "bg-gray-100 text-gray-800 border-none"
                         }
                       >
@@ -265,16 +268,52 @@ const FundSearch = () => {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-2 mt-4">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-            <button
-              key={page}
-              className={`px-3 py-1 rounded ${page === currentPage ? "bg-primary text-white" : "bg-background text-primary border border-muted"}`}
-              onClick={() => setCurrentPage(page)}
-            >
-              {page}
-            </button>
-          ))}
+        <div className="w-full max-w-full mt-4 px-2">
+          <div className="justify-center flex gap-2 min-w-max">
+            {/* Condensed Pagination Logic */}
+            {(() => {
+              const pages = [];
+              if (totalPages <= 10) {
+                for (let i = 1; i <= totalPages; i++) {
+                  pages.push(i);
+                }
+              } else {
+                // Always show first 3 pages
+                pages.push(1, 2, 3);
+                // Show ellipsis if currentPage > 5
+                if (currentPage > 5) pages.push('start-ellipsis');
+                // Show currentPage-1, currentPage, currentPage+1 if in middle
+                for (let i = Math.max(4, currentPage - 1); i <= Math.min(totalPages - 3, currentPage + 1); i++) {
+                  if (i > 3 && i < totalPages - 2) pages.push(i);
+                }
+                // Show ellipsis if currentPage < totalPages - 4
+                if (currentPage < totalPages - 4) pages.push('end-ellipsis');
+                // Always show last 2 pages
+                pages.push(totalPages - 1, totalPages);
+              }
+              return pages.map((page, idx) => {
+                if (page === 'start-ellipsis' || page === 'end-ellipsis') {
+                  return (
+                    <span key={page + idx} className="px-2 select-none">...</span>
+                  );
+                }
+                return (
+                  <button
+                    key={page}
+                    className={`px-3 py-1 rounded ${page === currentPage ? "bg-primary text-white" : "bg-background text-primary border border-muted"}`}
+                    onClick={() => {
+                      if (page !== currentPage) {
+                        setLoading(true);
+                        setCurrentPage(page);
+                      }
+                    }}
+                  >
+                    {page}
+                  </button>
+                );
+              });
+            })()}
+          </div>
         </div>
       )}
 
